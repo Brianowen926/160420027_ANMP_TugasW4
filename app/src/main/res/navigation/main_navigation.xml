@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/fragment_student_list">
+
+    <fragment
+        android:id="@+id/fragment_student_detail"
+        android:name="com.example.advnewweek4.view.fragment_student_detail"
+        android:label="fragment_student_detail"
+        tools:layout="@layout/fragment_student_detail" />
+    <fragment
+        android:id="@+id/fragment_student_list"
+        android:name="com.example.advnewweek4.view.fragment_student_list"
+        android:label="fragment_student_list"
+        tools:layout="@layout/fragment_student_list" >
+        <action
+            android:id="@+id/actionSetudentDetail"
+            app:destination="@id/fragment_student_detail" />
+    </fragment>
+</navigation>
