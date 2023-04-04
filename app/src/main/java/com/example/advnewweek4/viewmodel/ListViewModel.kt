@@ -1,6 +1,7 @@
 package com.example.advnewweek4.viewmodel
 
 import android.app.Application
+import android.app.DownloadManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +18,7 @@ class ListViewModel(application: Application): AndroidViewModel(application){
     val studentsLD = MutableLiveData<ArrayList<Student>>()
     val studentLoadErrorLD = MutableLiveData<Boolean>()
     val loadingLD = MutableLiveData<Boolean>()
+    val singleStudentLD = MutableLiveData<Student>()
 
 
     fun refresh() {
@@ -27,17 +29,34 @@ class ListViewModel(application: Application): AndroidViewModel(application){
         queue = Volley.newRequestQueue(getApplication())
         val url = "http://adv.jitusolution.com/student.php"
 
+        val urlSingleStudent = "http://adv.jitusolution.com/student.php?id=16055"
+
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
                 val sType = object : TypeToken<List<Student>>() { }.type
                 val result = Gson().fromJson<List<Student>>(it, sType)
+
                 studentsLD.value = result as ArrayList<Student>?
                 loadingLD.value = false
 
                 Log.d("showvoley", result.toString())
 //                loadingLD.value = false
 //                Log.d("showvoley", it)
+            },
+            {
+                Log.d("showvoley", it.toString())
+                studentLoadErrorLD.value = false
+                loadingLD.value = false
+            })
+
+        val stringRequestSingle = StringRequest(
+            Request.Method.GET, url,
+            {
+                val resultSingleStudent = Gson().fromJson<Student>(it, Student::class.java)
+                loadingLD.value = false
+
+                Log.d("showvoley", resultSingleStudent.toString())
             },
             {
                 Log.d("showvoley", it.toString())
